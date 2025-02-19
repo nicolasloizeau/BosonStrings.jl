@@ -3,7 +3,7 @@ using Documenter
 
 DocMeta.setdocmeta!(BosonStrings, :DocTestSetup, :(using BosonStrings); recursive=true)
 
-makedocs(;
+makedocs(prettyurls = get(ENV, "CI", nothing) == "true",
     modules=[BosonStrings],
     authors="Nicolas Loizeau",
     sitename="BosonStrings.jl",
@@ -17,7 +17,8 @@ makedocs(;
     ],
 )
 
-deploydocs(;
-    repo="github.com/nicolasloizeau/BosonStrings.jl",
-    devbranch="main",
+deploydocs(
+    repo = "github.com/nicolasloizeau/BosonStrings.jl.git",
+    devbranch = "main",
+    branch = "gh-pages",
 )
