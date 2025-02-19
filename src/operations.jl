@@ -31,7 +31,13 @@ function compress(o::Operator)
     return o1
 end
 
+"""
+    Base.:+(o1::Operator, o2::Operator)
+    Base.:+(o::Operator, a::Number)
+    Base.:+(a::Number, o::Operator)
 
+Addition between operators and numbers
+"""
 function Base.:+(o1::Operator, o2::Operator)
     @assert o1.N == o2.N "Adding operators of different dimention"
     o3 = Operator(o1.N)
@@ -47,7 +53,7 @@ function Base.:+(o::Operator, a::Number)
         o1.coef[ione(o)] += a
     else
         push!(o1.coef, a)
-        push!(o1.v, zeros(Int, o.N*2))
+        push!(o1.v, zeros(Int, o.N * 2))
     end
     return o1
 end
@@ -92,20 +98,20 @@ Base.:-(a::Number, o::Operator) = a + (-o)
 
 
 function mul_strings(s1::Vector{Int}, s2::Vector{Int})
-    N = length(s1)÷2
-    o = Operator(length(s1)÷2)
+    N = length(s1) ÷ 2
+    o = Operator(length(s1) ÷ 2)
     k = s1[1]
     l = s1[2]
     m = s2[1]
     n = s2[2]
-    for j in 0:min(l,m)
+    for j in 0:min(l, m)
         C = binomial(m, j)
         P = binomial(l, j) * factorial(j)
-        v = zeros(Int, N*2)
-        v[1] = m-j+k
-        v[2] = l-j+n
+        v = zeros(Int, N * 2)
+        v[1] = m - j + k
+        v[2] = l - j + n
         push!(o.v, v)
-        push!(o.coef, C*P)
+        push!(o.coef, C * P)
     end
     return compress(o)
 end
