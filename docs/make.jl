@@ -3,7 +3,8 @@ using Documenter
 
 DocMeta.setdocmeta!(BosonStrings, :DocTestSetup, :(using BosonStrings); recursive=true)
 
-makedocs(prettyurls = get(ENV, "CI", nothing) == "true",
+makedocs(format = Documenter.HTML(prettyurls = get(ENV, "CI", nothing) == "true",
+    ),
     modules=[BosonStrings],
     authors="Nicolas Loizeau",
     sitename="BosonStrings.jl",
