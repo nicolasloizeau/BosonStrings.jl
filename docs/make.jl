@@ -8,7 +8,7 @@ makedocs(
     authors="Nicolas Loizeau",
     sitename="BosonStrings.jl",
     format=Documenter.HTML(;
-        prettyurls = get(ENV, "CI", nothing) == "true"
+        prettyurls = get(ENV, "CI", nothing) == "true",
         canonical="https://nicolasloizeau.github.io/BosonStrings.jl",
         edit_link="main",
         assets=String[],
