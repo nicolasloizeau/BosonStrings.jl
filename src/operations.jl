@@ -117,8 +117,14 @@ function mul_strings(s1::Vector{Int}, s2::Vector{Int})
 end
 
 
+"""
+    Base.:*(o1::Operator, o2::Operator)
 
+Multiplication of two operators. Only supports single boson operator for now.
+"""
 function Base.:*(o1::Operator, o2::Operator)
+    @assert o1.N == o2.N "Multiplying operators of different dimention"
+    @assert o1.N == 1 "Only support single boson multiplication"
     o = Operator(o1.N)
     for i in 1:length(o1.v)
         for j in 1:length(o2.v)

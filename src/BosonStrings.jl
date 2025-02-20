@@ -1,7 +1,7 @@
 module BosonStrings
 
 
-
+export Operator
 
 using LinearAlgebra
 
