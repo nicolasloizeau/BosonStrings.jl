@@ -1,17 +1,12 @@
 using BosonStrings
-include("random.jl")
-
-Random.seed!(4)
-
-n = 5
-m = 5
-
-o = rand_operator(1, 4, 10)
-o = o*o
 
 
 
-println(inner(n,o,m))
+o1 = Operator(1)
+o1 += 1, (1, 1, 1)
+o2 = Operator(1)
+o2 += 1, (1, 2, 2)
+o = o1 * o2
+println(o)
 
-o = op_to_dense(o, 40)
-println(inner(n,o,m))
+println(inner(2,o,2))

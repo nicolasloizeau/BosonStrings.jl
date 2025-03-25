@@ -17,6 +17,8 @@ Normal ordered strings of bosonic operators in Julia.
 
 ## Getting started
 
+
+### Algebra
 Compute $a_{1}^{\\dagger 1} a_{1}^1 \\cdot a_{1}^{\\dagger 2} a_{1}^2$
 ```julia
 using BosonStrings
@@ -33,3 +35,10 @@ julia> o
 (2.0 + 0.0im) (†2)(2)
 ```
 we get $a_{1}^{\\dagger 1} a_{1}^1 \\cdot a_{1}^{\\dagger 2} a_{1}^2 = a_{1}^{\\dagger 3} a_{1}^3 + 2a_{1}^{\\dagger 2} a_{1}^2$
+
+### Expectation values
+Compute $\\langle 2 |o| 2 \\rangle$:
+```
+julia> inner(2, o, 2)
+4.0 + 0.0im
+```
