@@ -133,3 +133,21 @@ function Base.:*(o1::Operator, o2::Operator)
     end
     return o
 end
+
+"""
+    equal(o1, o2; tol=1e-10)
+
+Compare two operators. Return true if they are equal within the tolerance tol.
+"""
+function equal(o1::Operator, o2::Operator; tol=1e-10)
+    o3 = o1 - o2
+    if length(o3) == 0
+        return true
+    end
+    return maximum(abs.(o3.v)) < tol
+end
+
+
+# function inner(n::Int, o::Operator, m::Int)
+
+# end

@@ -2,6 +2,7 @@ module BosonStrings
 
 
 export Operator
+export equal
 
 using LinearAlgebra
 

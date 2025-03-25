@@ -27,3 +27,15 @@ end
     O2 += 1, [2, -2]
     @test O == O2
 end
+
+@testset "Operations" begin
+    o1 = Operator(1)
+    o1 += 1, (1, 1, 1)
+    o2 = Operator(1)
+    o2 += 1, (1, 2, 2)
+    o = o1 * o2
+    o3 = Operator(1)
+    o3 += 1, (1, 3, 3)
+    o3 += 2, (1, 2, 2)
+    @test equal(o, o3)
+end
