@@ -9,7 +9,7 @@
 Create a d x d annihilation operator, dense matrix.
 """
 function annihilation(d::Int)
-    o = zeros(Float64, d, d)
+    o = zeros(Complex{Float64}, d, d)
     for i in 1:d-1
         o[i, i+1] = sqrt(i)
     end
@@ -24,13 +24,12 @@ To add a term of the form `c*(†n)(m)`, do `o+=c,n,m`
 """
 function Base.:+(o::Matrix, term::Tuple{Number, Tuple{Int,Int} })
     @assert size(o)[1] == size(o)[2]
-    println(term)
     c = term[1]
     n = term[2][1]
     m = term[2][2]
     a = annihilation(size(o)[1])
     adag = transpose(a)
-    return deepcopy(o) + adag^n*a^m
+    return deepcopy(o) +c* adag^n*a^m
 end
 
 """
@@ -48,4 +47,23 @@ function inner(n::Int, o::Matrix, m::Int)
     sn[n+1] = 1
     sm[m+1] = 1
     return sn' * o * sm
+end
+
+
+
+"""
+    op_to_dense(o::Operator, dim::Int)
+
+Convert a boson `Operator` to a dense matrix of dimention `dim`.
+"""
+function op_to_dense(o::Operator, dim::Int)
+    @assert o.N == 1
+    odense = zeros(Complex{Float64}, dim, dim)
+    for k in 1:length(o.v)
+        i = o.v[k][1]
+        j = o.v[k][2]
+        c = o.coef[k]
+        odense += c, (i, j)
+    end
+    return odense
 end

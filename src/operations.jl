@@ -96,7 +96,7 @@ Base.:-(o::Operator, a::Number) = o + (-a)
 Base.:-(a::Number, o::Operator) = a + (-o)
 
 
-
+#TODO this is single boson only
 function mul_strings(s1::Vector{Int}, s2::Vector{Int})
     N = length(s1) ÷ 2
     o = Operator(length(s1) ÷ 2)
@@ -148,6 +148,20 @@ function equal(o1::Operator, o2::Operator; tol=1e-10)
 end
 
 
-# function inner(n::Int, o::Operator, m::Int)
+"""
+    inner(n::Int, o::Operator, m::Int)
 
-# end
+Return <n|o|m> where |n> and |m> are foch states.
+"""
+function inner(n::Int, o::Operator, m::Int)
+    res = 0
+    for k in 1:length(o.v)
+        i = o.v[k][1]
+        j = o.v[k][2]
+        if (n-i>=0 && m-j>=0) && (n-i == m-j)
+            c = sqrt(factorial(n)/factorial(n-i)*factorial(m)/factorial(m-j))
+            res += c*o.coef[k]
+        end
+    end
+    return res
+end
