@@ -4,6 +4,8 @@ module BosonStrings
 export Operator
 export equal, inner, op_to_dense
 
+
+using Random
 using LinearAlgebra
 
 include("singleboson.jl")
