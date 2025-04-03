@@ -36,7 +36,8 @@ julia> o
 ```
 we get $a_{1}^{\\dagger 1} a_{1}^1 \\cdot a_{1}^{\\dagger 2} a_{1}^2 = a_{1}^{\\dagger 3} a_{1}^3 + 2a_{1}^{\\dagger 2} a_{1}^2$
 
-### Expectation values
+### Expectation values with Fock States
+
 Compute $\\langle 2 |o| 2 \\rangle$:
 ```
 julia> inner(2, o, 2)
