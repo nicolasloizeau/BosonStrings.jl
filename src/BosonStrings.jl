@@ -16,6 +16,7 @@ include("operations.jl")
 include("dense.jl")
 include("evolution.jl")
 include("truncation.jl")
+include("states.jl")
 
 
 end
