@@ -1,8 +1,7 @@
 
 
 """
-Represent an normal ordered boson operator
-Each key is a
+Represent an normal ordered boson operator `o(N)` where `N` is the number of modes.
 """
 mutable struct Operator
     N::Int
