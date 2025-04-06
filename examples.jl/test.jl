@@ -9,4 +9,6 @@ o2 += 1, (1, 2, 2)
 o = o1 * o2
 println(o)
 
-println(inner(2,o,2))
+println(inner(2, o, 2))
+
+println(trim(o, 1))

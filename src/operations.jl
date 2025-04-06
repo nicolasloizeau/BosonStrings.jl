@@ -199,22 +199,3 @@ function equal(o1::Operator, o2::Operator; tol=1e-10)
     end
     return maximum(abs.(o3.v)) < tol
 end
-
-
-"""
-    inner(n::Int, o::Operator, m::Int)
-
-Return <n|o|m> where |n> and |m> are foch states.
-"""
-function inner(n::Int, o::Operator, m::Int)
-    res = 0
-    for k in 1:length(o.v)
-        i = o.v[k][1]
-        j = o.v[k][2]
-        if (n-i>=0 && m-j>=0) && (n-i == m-j)
-            c = sqrt(factorial(n)/factorial(n-i)*factorial(m)/factorial(m-j))
-            res += c*o.coef[k]
-        end
-    end
-    return res
-end
