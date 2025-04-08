@@ -22,10 +22,10 @@ end
 Ω = 2.5 # drive strength (time-independent in lab frame)
 
 # construct the Hamiltonian and number operator
-num = Operator(1)
-num += 1, (1, 1, 1)
+O = Operator(1)
+O += 1, (1, 1, 1)
 H = Operator(1)
-H += ω * num
+H += ω, (1, 1, 1)
 H += Ω, (1, 0, 1)
 H += Ω, (1, 1, 0)
 
@@ -33,7 +33,7 @@ H += Ω, (1, 1, 0)
 # Time evolution, time compute <0|num(t)|0>
 times = 0:0.1:100
 state = 0
-result = evolve(H, num, state, times)
+result = evolve(H, O, state, times)
 
 
 plt.plot(times, result)
