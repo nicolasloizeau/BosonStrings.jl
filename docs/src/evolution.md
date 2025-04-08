@@ -26,11 +26,10 @@ println(H)
 
 Time evolve using Runge-Kutta
 ```@example constructing
-using ProgressBars
 function evolve(H, O, state, times)
     result = []
     dt = times[2] - times[1]
-    for t in ProgressBar(times)
+    for t in times
         push!(result, expect(O, state, state))  # save <0|O|0>
         O = rk4(H, O, dt)  #preform one step of rk4
     end

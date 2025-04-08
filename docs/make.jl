@@ -2,7 +2,6 @@ using BosonStrings
 using Documenter
 
 
-
 readme_str = read(joinpath(@__DIR__, "..", "README.md"), String)
 write(
   joinpath(@__DIR__, "src", "index.md"),
