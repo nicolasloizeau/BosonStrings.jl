@@ -17,7 +17,6 @@ If `heisenberg=false` then it is assumed that O is a density matrix.
 `M` is the number of strings to keep.
 """
 function rk4(H::Operator, O::Operator, dt::Real; hbar::Real=1, heisenberg=true, M=2^20)
-    (keep.N == 0) && (keep = Operator(O.N))
     s = -1im
     heisenberg && (s = 1im)
     k1 = f_unitary(H, O, s, hbar)

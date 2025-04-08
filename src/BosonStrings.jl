@@ -2,7 +2,8 @@ module BosonStrings
 
 
 export Operator
-export equal, inner, op_to_dense, com
+export equal, op_to_dense, com
+export expect, inner
 export trim
 export rk4
 
