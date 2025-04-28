@@ -5,7 +5,7 @@ export Operator
 export equal, op_to_dense, com
 export expect, inner
 export trim
-export rk4
+export rk4, rk4_lindblad
 
 using Random
 using LinearAlgebra

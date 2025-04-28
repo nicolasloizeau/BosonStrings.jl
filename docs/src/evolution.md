@@ -24,7 +24,7 @@ println(H)
 ```
 
 
-Time evolve using Runge-Kutta
+Time evolve `O` in the Heisenberg picture using Runge-Kutta
 ```@example constructing
 function evolve(H, O, state, times)
     result = []
