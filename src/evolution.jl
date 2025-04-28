@@ -68,7 +68,6 @@ function rk4_lindblad(H::Operator, O::Operator, dt::Real, L; hbar::Real=1, heise
     if length(gamma) == 0
         gamma = ones(length(L))
     end
-    (qubitlength(keep) == 0) && (keep = Operator(qubitlength(O)))
     s = -1im
     heisenberg && (s = 1im)
     k1 = f_lindblad(H, O, s, hbar, L, gamma)
