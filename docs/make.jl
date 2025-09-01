@@ -1,6 +1,15 @@
 using BosonStrings
 using Documenter
 
+
+readme_str = read(joinpath(@__DIR__, "..", "README.md"), String)
+write(
+  joinpath(@__DIR__, "src", "index.md"),
+  replace(readme_str, "./docs/src/assets/" => "assets/"),
+)
+
+
+
 DocMeta.setdocmeta!(BosonStrings, :DocTestSetup, :(using BosonStrings); recursive=true)
 
 makedocs(
@@ -13,9 +22,11 @@ makedocs(
         edit_link="main",
         assets=String[],
     ),
-    pages=[
-        "Home" => "index.md",
-    ],
+    pages = [
+        "Getting started" => "index.md",
+        "Tutorials" => ["Constructing operators"=>"constructing.md",
+                        "Time evolution"=>"evolution.md"],
+        "Documentation" => "docstrings.md"]
 )
 
 deploydocs(

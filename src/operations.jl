@@ -97,7 +97,7 @@ Base.:-(a::Number, o::Operator) = a + (-o)
 
 
 
-function mul_strings(s1::Vector{Int}, s2::Vector{Int})
+function mul_strings(s1::NTuple{2,Int}, s2::NTuple{2,Int})
     N = length(s1) ÷ 2
     o = Operator(length(s1) ÷ 2)
     k = s1[1]
@@ -117,6 +117,36 @@ function mul_strings(s1::Vector{Int}, s2::Vector{Int})
 end
 
 
+function tensor_product(operators::Vector{Operator})
+    N = length(operators)
+    o = Operator(N)
+    ranges = [1:length(o) for o in operators]
+    for indexes in Iterators.product(ranges...)
+        v = zeros(Int, N * 2)
+        for i in 1:N
+            v[2*i-1] = operators[i].v[indexes[i]][1]
+            v[2*i] = operators[i].v[indexes[i]][2]
+        end
+        push!(o.v, v)
+        push!(o.coef, prod(operators[i].coef[indexes[i]] for i in 1:N))
+    end
+    return compress(o)
+end
+
+function mul_strings(s1::Vector{Int}, s2::Vector{Int})
+    @assert length(s1) == length(s2) "Multiplying strings of different lengths"
+    N = length(s1) ÷ 2
+    if N == 1
+        return mul_strings((s1[1], s1[2]), (s2[1], s2[2]))
+    end
+    single_operators::Vector{Operator} = [mul_strings((s1[n*2-1], s1[n*2]), (s2[n*2-1], s2[n*2])) for n in 1:N]
+    return tensor_product(single_operators)
+end
+
+
+
+
+
 """
     Base.:*(o1::Operator, o2::Operator)
 
@@ -124,7 +154,6 @@ Multiplication of two operators. Only supports single boson operator for now.
 """
 function Base.:*(o1::Operator, o2::Operator)
     @assert o1.N == o2.N "Multiplying operators of different dimention"
-    @assert o1.N == 1 "Only support single boson multiplication"
     o = Operator(o1.N)
     for i in 1:length(o1.v)
         for j in 1:length(o2.v)
@@ -132,4 +161,22 @@ function Base.:*(o1::Operator, o2::Operator)
         end
     end
     return o
+end
+
+
+function com(o1::Operator, o2::Operator)
+    return o1 * o2 - o2 * o1
+end
+
+"""
+    equal(o1, o2; tol=1e-10)
+
+Compare two operators. Return true if they are equal within the tolerance tol.
+"""
+function equal(o1::Operator, o2::Operator; tol=1e-10)
+    o3 = o1 - o2
+    if length(o3) == 0
+        return true
+    end
+    return maximum(abs.(o3.v)) < tol
 end
