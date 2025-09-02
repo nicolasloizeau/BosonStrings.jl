@@ -22,7 +22,7 @@ end
 Add a term to a dense matrix operator.
 To add a term of the form `c*(†n)(m)`, do `o+=c,n,m`
 """
-function Base.:+(o::Matrix, term::Tuple{Number, Tuple{Int,Int} })
+function Base.:+(o::Matrix, term::Tuple{Number, Tuple{Integer,Integer} })
     @assert size(o)[1] == size(o)[2]
     c = term[1]
     n = term[2][1]
@@ -57,12 +57,12 @@ end
 Convert a boson `Operator` to a dense matrix of dimention `dim`.
 """
 function op_to_dense(o::Operator, dim::Int)
-    @assert o.N == 1
+    @assert bosonlength(o) == 1
     odense = zeros(Complex{Float64}, dim, dim)
-    for k in 1:length(o.v)
-        i = o.v[k][1]
-        j = o.v[k][2]
-        c = o.coef[k]
+    for k in 1:length(o)
+        i = o.strings[k].v[1]
+        j = o.strings[k].v[2]
+        c = o.coeffs[k]
         odense += c, (i, j)
     end
     return odense

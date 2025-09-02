@@ -21,22 +21,24 @@ julia> o
 function Base.:+(o::Operator, term::Tuple{Number, Vararg{Tuple{Int,Int,Int}} })
     c = term[1]
     term = term[2:end]
-    newterm = zeros(Int, o.N*2)
+    N = bosonlength(o)
+    newterm = zeros(Int, N*2)
     for sub in term
         n = sub[1]
         newterm[n*2-1] = sub[2]
         newterm[n*2] = sub[3]
     end
-    push!(o.v, newterm)
-    push!(o.coef, c)
-    return compress(o)
+    push!(o.strings, BosonString{N}(newterm))
+    push!(o.coeffs, c)
+    return o
+    # return compress(o)
 end
 
 
-function disp_string(string::Vector{Int})
+function disp_string(string::BosonString)
     s = ""
-    for i in 1:length(string)
-        c = string[i]
+    for i in 1:bosonlength(string)*2
+        c = string.v[i]
         if i%2 == 1
             s *= "(†$c)"
         else
@@ -58,8 +60,8 @@ function Base.show(io::IO, o::Operator)
         return
     end
     for i in 1:length(o)
-        string = o.v[i]
-        c = o.coef[i]
+        string = o.strings[i]
+        c = o.coeffs[i]
         s = disp_string(string)
         println(io, "($(round(c, digits=10))) $s")
     end

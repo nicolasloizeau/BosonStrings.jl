@@ -103,10 +103,8 @@ function disp_single_string(s::Vector{Int})
     s2 = ""
     for c in s
         if c > 0
-            # s2 *= "a⁺" * to_superscript(c)
             s2 *= "(†$c)"
         else
-            # s2 *= "a" * to_superscript(-c)
             s2 *= "($(-c))"
         end
     end
